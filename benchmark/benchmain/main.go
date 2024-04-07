@@ -41,10 +41,15 @@ Assume there are two result files names as "basePerf" and "curPerf" created by a
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/gob"
 	"flag"
 	"fmt"
+	datadog "github.com/DataDog/zstd"
+	"github.com/klauspost/compress/zstd"
+	"google.golang.org/grpc/encoding"
+	_ "google.golang.org/grpc/encoding/gzip"
 	"io"
 	"log"
 	"math/rand"
@@ -154,7 +159,7 @@ const (
 
 var (
 	allWorkloads              = []string{workloadsUnary, workloadsStreaming, workloadsUnconstrained, workloadsAll}
-	allCompModes              = []string{compModeOff, compModeGzip, compModeNop, compModeAll}
+	allCompModes              = []string{compModeOff, compModeGzip, compModeNop, compModeAll, Datadog, Klauspost}
 	allToggleModes            = []string{toggleModeOff, toggleModeOn, toggleModeBoth}
 	allNetworkModes           = []string{networkModeNone, networkModeLocal, networkModeLAN, networkModeWAN, networkLongHaul}
 	allRecvBufferPools        = []string{recvBufferPoolNil, recvBufferPoolSimple, recvBufferPoolAll}
@@ -299,6 +304,7 @@ func makeClients(bf stats.Features) ([]testgrpc.BenchmarkServiceClient, func()) 
 			grpc.WithCompressor(nopCompressor{}),
 			grpc.WithDecompressor(nopDecompressor{}),
 		)
+		opts = append(opts, grpc.WithDefaultCallOptions(grpc.UseCompressor(nopCompressor{}.Type())))
 	}
 	if bf.ModeCompressor == compModeGzip {
 		sopts = append(sopts,
@@ -309,6 +315,13 @@ func makeClients(bf stats.Features) ([]testgrpc.BenchmarkServiceClient, func()) 
 			grpc.WithCompressor(grpc.NewGZIPCompressor()),
 			grpc.WithDecompressor(grpc.NewGZIPDecompressor()),
 		)
+		opts = append(opts, grpc.WithDefaultCallOptions(grpc.UseCompressor(grpc.NewGZIPCompressor().Type())))
+	}
+	if bf.ModeCompressor == Klauspost {
+		opts = append(opts, grpc.WithDefaultCallOptions(grpc.UseCompressor(Klauspost)))
+	}
+	if bf.ModeCompressor == Datadog {
+		opts = append(opts, grpc.WithDefaultCallOptions(grpc.UseCompressor(Datadog)))
 	}
 	if bf.EnableKeepalive {
 		sopts = append(sopts,
@@ -378,6 +391,7 @@ func makeClients(bf stats.Features) ([]testgrpc.BenchmarkServiceClient, func()) 
 		}))
 	}
 	lis = nw.Listener(lis)
+	registerCompressors()
 	stopper := benchmark.StartServer(benchmark.ServerInfo{Type: "protobuf", Listener: lis}, sopts...)
 	conns := make([]*grpc.ClientConn, bf.Connections)
 	clients := make([]testgrpc.BenchmarkServiceClient, bf.Connections)
@@ -392,6 +406,139 @@ func makeClients(bf stats.Features) ([]testgrpc.BenchmarkServiceClient, func()) 
 		}
 		stopper()
 	}
+}
+
+func registerCompressors() {
+	enc, _ := zstd.NewWriter(nil)
+	dec, _ := zstd.NewReader(nil)
+	c1 := &klauspostCompressor{
+		encoder: enc,
+		decoder: dec,
+	}
+	encoding.RegisterCompressor(c1)
+	c2 := &datadogCompressor{}
+	encoding.RegisterCompressor(c2)
+	c0 := &noopCompressor{}
+	encoding.RegisterCompressor(c0)
+}
+
+const (
+	Klauspost = "klauspost"
+	Datadog   = "datadog"
+)
+
+type noopCompressor struct {
+}
+
+type noopWriteCloser struct {
+}
+
+func (z *noopWriteCloser) Write(p []byte) (int, error) {
+	return len(p), nil
+}
+
+func (z *noopWriteCloser) Close() error {
+	return nil
+}
+
+func (c *noopCompressor) Compress(w io.Writer) (io.WriteCloser, error) {
+	return &noopWriteCloser{}, nil
+}
+
+func (c *noopCompressor) Decompress(r io.Reader) (io.Reader, error) {
+	return r, nil
+}
+func (c *noopCompressor) Name() string {
+	return compModeNop
+}
+
+type klauspostCompressor struct {
+	encoder *zstd.Encoder
+	decoder *zstd.Decoder
+}
+
+func (c *klauspostCompressor) Compress(w io.Writer) (io.WriteCloser, error) {
+	return &zstdWriteCloser{
+		enc:    c.encoder,
+		writer: w,
+	}, nil
+}
+
+type zstdWriteCloser struct {
+	enc    *zstd.Encoder
+	writer io.Writer    // Compressed data will be written here.
+	buf    bytes.Buffer // Buffer uncompressed data here, compress on Close.
+}
+
+func (z *zstdWriteCloser) Write(p []byte) (int, error) {
+	return z.buf.Write(p)
+}
+
+func (z *zstdWriteCloser) Close() error {
+	compressed := z.enc.EncodeAll(z.buf.Bytes(), nil)
+	_, err := io.Copy(z.writer, bytes.NewReader(compressed))
+	return err
+}
+
+func (c *klauspostCompressor) Decompress(r io.Reader) (io.Reader, error) {
+	compressed, err := io.ReadAll(r)
+	if err != nil {
+		return nil, err
+	}
+
+	uncompressed, err := c.decoder.DecodeAll(compressed, nil)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(uncompressed), nil
+}
+func (c *klauspostCompressor) Name() string {
+	return Klauspost
+}
+
+type datadogCompressor struct{}
+
+func (c *datadogCompressor) Compress(w io.Writer) (io.WriteCloser, error) {
+	return &datadogWriteCloser{
+		writer: w,
+	}, nil
+}
+
+type datadogWriteCloser struct {
+	writer io.Writer    // Compressed data will be written here.
+	buf    bytes.Buffer // Buffer uncompressed data here, compress on Close.
+}
+
+func (z *datadogWriteCloser) Write(p []byte) (int, error) {
+	return z.buf.Write(p)
+}
+
+func (z *datadogWriteCloser) Close() error {
+	// prefer faster compression decompression rather than compression ratio
+	compressed, err := datadog.CompressLevel(nil, z.buf.Bytes(), 3)
+	if err != nil {
+		return err
+	}
+	_, err = z.writer.Write(compressed)
+	return err
+}
+
+func (c *datadogCompressor) Decompress(r io.Reader) (io.Reader, error) {
+	compressed, err := io.ReadAll(r)
+	if err != nil {
+		return nil, err
+	}
+
+	// Use Datadog's API to decompress data
+	uncompressed, err := datadog.Decompress(nil, compressed)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(uncompressed), nil
+}
+
+func (c *datadogCompressor) Name() string {
+	return Datadog
 }
 
 func makeFuncUnary(bf stats.Features) (rpcCallFunc, rpcCleanupFunc) {
@@ -875,10 +1022,10 @@ func setToggleMode(val string) []bool {
 
 func setCompressorMode(val string) []string {
 	switch val {
-	case compModeNop, compModeGzip, compModeOff:
+	case compModeNop, compModeGzip, compModeOff, Datadog, Klauspost:
 		return []string{val}
 	case compModeAll:
-		return []string{compModeNop, compModeGzip, compModeOff}
+		return []string{compModeGzip, compModeOff, Datadog, Klauspost}
 	default:
 		// This should never happen because a wrong value passed to this flag would
 		// be caught during flag.Parse().

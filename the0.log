@@ -1,0 +1,1366 @@
+Last login: Sun Apr  7 18:16:05 on ttys005
+powder@zillizdebijibendiannao grpc-go % ssh powder@172.18.50.23
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 6.5.0-25-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+Expanded Security Maintenance for Applications is not enabled.
+
+25 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+7 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+*** System restart required ***
+Last login: Sun Apr  7 18:16:12 2024 from 172.18.20.230
+powder@powder-System-Product-Name:~$ cd go-src/grpc-go/
+powder@powder-System-Product-Name:~/go-src/grpc-go$ go run ./benchmark/benchmain/main.go -benchtime=60 -workloads=unary -reqSizeBytes=40 -respSizeBytes=3200 -compression=all
+invalid value "60" for flag -benchtime: parse error
+Usage of /tmp/go-build483052479/b001/exe/main:
+  -benchtime duration
+    	Configures the amount of time to run each benchmark (default 1s)
+  -bufconn
+    	Use in-memory connection instead of system network I/O
+  -channelz value
+    	Channelz mode - One of: off, on, both (default off)
+  -clientReadBufferSize value
+    	Configures the client read buffer size in bytes. If negative, use the default - may be a a comma-separated list (default -1)
+  -clientWriteBufferSize value
+    	Configures the client write buffer size in bytes. If negative, use the default - may be a a comma-separated list (default -1)
+  -compression value
+    	Compression mode - One of: off, gzip, nop, all, datadog, klauspost (default off)
+  -connections int
+    	The number of connections. Each connection will handle maxConcurrentCalls RPC streams (default 1)
+  -cpuProfile string
+    	Enables CPU profiling output to the filename provided
+  -enable_keepalive
+    	Enable client keepalive. 
+    	Keepalive.Time is set to 10s, Keepalive.Timeout is set to 1s, Keepalive.PermitWithoutStream is set to true.
+  -kbps value
+    	Simulated network throughput (in kbps) - may be a comma-separated list (default 0,10240)
+  -latency value
+    	Simulated one-way network latency - may be a comma-separated list (default 0s,40ms)
+  -maxConcurrentCalls value
+    	Number of concurrent RPCs during benchmarks (default 1,8,64,512)
+  -memProfile string
+    	Enables memory profiling output to the filename provided.
+  -memProfileRate int
+    	Configures the memory profiling rate. 
+    	memProfile should be set before setting profile rate. To include every allocated block in the profile, set MemProfileRate to 1. To turn off profiling entirely, set MemProfileRate to 0. 512 * 1024 by default. (default 524288)
+  -mtu value
+    	Simulated network MTU (Maximum Transmission Unit) - may be a comma-separated list (default 0)
+  -networkMode value
+    	Network mode includes LAN, WAN, Local and Longhaul (default none)
+  -preloader value
+    	Preloader mode - One of: off, on, both, preloader works only in streaming and unconstrained modes and will be ignored in unary mode (default off)
+  -recvBufferPool value
+    	Configures the shared receive buffer pool. One of: nil, simple, all (default nil)
+  -reqPayloadCurveFiles value
+    	comma-separated list of CSV files describing the shape a random distribution of request payload sizes
+  -reqSizeBytes value
+    	Request size in bytes - may be a comma-separated list
+  -respPayloadCurveFiles value
+    	comma-separated list of CSV files describing the shape a random distribution of response payload sizes
+  -respSizeBytes value
+    	Response size in bytes - may be a comma-separated list
+  -resultFile string
+    	Save the benchmark result into a binary file
+  -serverReadBufferSize value
+    	Configures the server read buffer size in bytes. If negative, use the default - may be a a comma-separated list (default -1)
+  -serverWriteBufferSize value
+    	Configures the server write buffer size in bytes. If negative, use the default - may be a a comma-separated list (default -1)
+  -sharedWriteBuffer value
+    	Configures both client and server to share write buffer - One of: off, on, both (default off)
+  -sleepBetweenRPCs value
+    	Configures the maximum amount of time the client should sleep between consecutive RPCs - may be a a comma-separated list (default 0s)
+  -trace value
+    	Trace mode - One of: off, on, both (default off)
+  -workloads value
+    	Workloads to execute - One of: unary, streaming, unconstrained, all (default all)
+exit status 2
+powder@powder-System-Product-Name:~/go-src/grpc-go$ go run ./benchmark/benchmain/main.go -benchtime=60s -workloads=unary -reqSizeBytes=40 -respSizeBytes=3200 -compression=all
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 162.4380µs	90_Latency: 194.0410µs	99_Latency: 421.6910µs	Avg_Latency: 171.2480µs	Bytes/op: 58756.710872299074	Allocs/op: 241.57223047902139	
+Histogram (unit: µs)
+Count: 349880  Min: 117.1  Max: 8505.4  Avg: 171.25
+------------------------------------------------------------
+[    117.108000,     117.109000)       1    0.0%    0.0%  
+[    117.109000,     117.113879)       0    0.0%    0.0%  
+[    117.113879,     117.142562)       0    0.0%    0.0%  
+[    117.142562,     117.311185)       0    0.0%    0.0%  
+[    117.311185,     118.302506)       1    0.0%    0.0%  
+[    118.302506,     124.130396)     105    0.0%    0.0%  
+[    124.130396,     158.392056)  136859   39.1%   39.1%  ####
+[    158.392056,     359.813389)  208198   59.5%   98.7%  ######
+[    359.813389,    1543.951956)    4692    1.3%  100.0%  
+[   1543.951956,    8505.400000)      23    0.0%  100.0%  
+[   8505.400000,   49431.149923)       1    0.0%  100.0%  
+Number of requests:  349880	Request throughput:  1.8660266666666667e+06 bit/s
+Number of responses: 349880	Response throughput: 1.4928213333333334e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 98.5530µs	90_Latency: 124.2830µs	99_Latency: 251.9950µs	Avg_Latency: 103.8050µs	Bytes/op: 24625.10501206557	Allocs/op: 218.30468511635647	
+Histogram (unit: µs)
+Count: 576848  Min:  64.8  Max: 3671.0  Avg: 103.81
+------------------------------------------------------------
+[     64.846000,      64.847000)       1    0.0%    0.0%  
+[     64.847000,      64.851353)       0    0.0%    0.0%  
+[     64.851353,      64.874650)       0    0.0%    0.0%  
+[     64.874650,      64.999349)       0    0.0%    0.0%  
+[     64.999349,      65.666808)       4    0.0%    0.0%  
+[     65.666808,      69.239414)      48    0.0%    0.0%  
+[     69.239414,      88.361950)  137703   23.9%   23.9%  ##
+[     88.361950,     190.716207)  429693   74.5%   98.4%  #######
+[    190.716207,     738.572091)    9184    1.6%  100.0%  
+[    738.572091,    3670.996000)     214    0.0%  100.0%  
+[   3670.996000,   19366.930314)       1    0.0%  100.0%  
+Number of requests:  576848	Request throughput:  3.0765226666666665e+06 bit/s
+Number of responses: 576848	Response throughput: 2.4612181333333334e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 122.6280µs	90_Latency: 156.9730µs	99_Latency: 349.6400µs	Avg_Latency: 133.0880µs	Bytes/op: 47367.19748280092	Allocs/op: 251.53975565747604	
+Histogram (unit: µs)
+Count: 450024  Min:  81.4  Max: 8394.4  Avg: 133.09
+------------------------------------------------------------
+[     81.378000,      81.379000)       1    0.0%    0.0%  
+[     81.379000,      81.383873)       0    0.0%    0.0%  
+[     81.383873,      81.412492)       0    0.0%    0.0%  
+[     81.412492,      81.580575)       0    0.0%    0.0%  
+[     81.580575,      82.567730)       0    0.0%    0.0%  
+[     82.567730,      88.365317)      85    0.0%    0.0%  
+[     88.365317,     122.414711)  222886   49.5%   49.5%  #####
+[    122.414711,     322.387766)  220461   49.0%   98.5%  #####
+[    322.387766,    1496.835173)    6575    1.5%  100.0%  
+[   1496.835173,    8394.398000)      15    0.0%  100.0%  
+[   8394.398000,   48903.979511)       1    0.0%  100.0%  
+Number of requests:  450024	Request throughput:  2.400128e+06 bit/s
+Number of responses: 450024	Response throughput: 1.9201024e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 111.9990µs	90_Latency: 138.0240µs	99_Latency: 198.0220µs	Avg_Latency: 117.9550µs	Bytes/op: 47285.119059763245	Allocs/op: 250.67442254331047	
+Histogram (unit: µs)
+Count: 507787  Min:  79.3  Max: 4151.1  Avg: 117.96
+------------------------------------------------------------
+[     79.333000,      79.334000)       1    0.0%    0.0%  
+[     79.334000,      79.338425)       0    0.0%    0.0%  
+[     79.338425,      79.362433)       0    0.0%    0.0%  
+[     79.362433,      79.492684)       0    0.0%    0.0%  
+[     79.492684,      80.199326)       0    0.0%    0.0%  
+[     80.199326,      84.033042)      50    0.0%    0.0%  
+[     84.033042,     104.831938)  144262   28.4%   28.4%  ###
+[    104.831938,     217.671300)  358855   70.7%   99.1%  #######
+[    217.671300,     829.853888)    4423    0.9%  100.0%  
+[    829.853888,    4151.102000)     195    0.0%  100.0%  
+[   4151.102000,   22169.727896)       1    0.0%  100.0%  
+Number of requests:  507787	Request throughput:  2.7081973333333335e+06 bit/s
+Number of responses: 507787	Response throughput: 2.1665578666666666e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 280.4410µs	90_Latency: 386.4580µs	99_Latency: 789.1380µs	Avg_Latency: 303.9870µs	Bytes/op: 56515.45555654909	Allocs/op: 207.9940838458997	
+Histogram (unit: µs)
+Count: 1576869  Min: 125.5  Max: 8223.0  Avg: 303.99
+------------------------------------------------------------
+[    125.518000,     125.519000)        1    0.0%    0.0%  
+[    125.519000,     125.523856)        0    0.0%    0.0%  
+[    125.523856,     125.552292)        0    0.0%    0.0%  
+[    125.552292,     125.718809)        0    0.0%    0.0%  
+[    125.718809,     126.693922)        0    0.0%    0.0%  
+[    126.693922,     132.404098)        0    0.0%    0.0%  
+[    132.404098,     165.842397)     1062    0.1%    0.1%  
+[    165.842397,     361.654174)  1353947   85.9%   85.9%  #########
+[    361.654174,    1508.310988)   220758   14.0%   99.9%  #
+[   1508.310988,    8223.034000)     1100    0.1%  100.0%  
+[   8223.034000,   47543.870510)        1    0.0%  100.0%  
+Number of requests:  1576869	Request throughput:  8.409968e+06 bit/s
+Number of responses: 1576869	Response throughput: 6.7279744e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 175.7600µs	90_Latency: 246.8270µs	99_Latency: 430.5450µs	Avg_Latency: 189.3910µs	Bytes/op: 24081.092795680648	Allocs/op: 186.7050272528567	
+Histogram (unit: µs)
+Count: 2530010  Min:  69.5  Max: 8036.1  Avg: 189.39
+------------------------------------------------------------
+[     69.473000,      69.474000)        1    0.0%    0.0%  
+[     69.474000,      69.478845)        0    0.0%    0.0%  
+[     69.478845,      69.507168)        0    0.0%    0.0%  
+[     69.507168,      69.672721)        0    0.0%    0.0%  
+[     69.672721,      70.640434)        0    0.0%    0.0%  
+[     70.640434,      76.297021)        5    0.0%    0.0%  
+[     76.297021,     109.361566)    24890    1.0%    1.0%  
+[    109.361566,     302.634312)  2360509   93.3%   94.3%  #########
+[    302.634312,    1432.374785)   144097    5.7%  100.0%  #
+[   1432.374785,    8036.066000)      507    0.0%  100.0%  
+[   8036.066000,   46636.734654)        1    0.0%  100.0%  
+Number of requests:  2530010	Request throughput:  1.3493386666666666e+07 bit/s
+Number of responses: 2530010	Response throughput: 1.0794709333333333e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 200.2770µs	90_Latency: 378.8250µs	99_Latency: 558.0010µs	Avg_Latency: 232.1610µs	Bytes/op: 46771.02470385269	Allocs/op: 218.9530757122627	
+Histogram (unit: µs)
+Count: 2064091  Min:  90.6  Max: 6855.5  Avg: 232.16
+------------------------------------------------------------
+[     90.592000,      90.593000)        1    0.0%    0.0%  
+[     90.593000,      90.597740)        0    0.0%    0.0%  
+[     90.597740,      90.624949)        0    0.0%    0.0%  
+[     90.624949,      90.781128)        0    0.0%    0.0%  
+[     90.781128,      91.677608)        1    0.0%    0.0%  
+[     91.677608,      96.823484)       12    0.0%    0.0%  
+[     96.823484,     126.361248)    13242    0.6%    0.6%  
+[    126.361248,     295.910515)  1689362   81.8%   82.5%  ########
+[    295.910515,    1269.137672)   360399   17.5%   99.9%  ##
+[   1269.137672,    6855.544000)     1073    0.1%  100.0%  
+[   6855.544000,   38921.989589)        1    0.0%  100.0%  
+Number of requests:  2064091	Request throughput:  1.1008485333333334e+07 bit/s
+Number of responses: 2064091	Response throughput: 8.806788266666666e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 189.0610µs	90_Latency: 249.0510µs	99_Latency: 436.3930µs	Avg_Latency: 199.6420µs	Bytes/op: 46768.81394343064	Allocs/op: 220.13213918764984	
+Histogram (unit: µs)
+Count: 2400098  Min:  86.2  Max: 8669.1  Avg: 199.64
+------------------------------------------------------------
+[     86.238000,      86.239000)        1    0.0%    0.0%  
+[     86.239000,      86.243894)        0    0.0%    0.0%  
+[     86.243894,      86.272738)        0    0.0%    0.0%  
+[     86.272738,      86.442744)        0    0.0%    0.0%  
+[     86.442744,      87.444742)        0    0.0%    0.0%  
+[     87.444742,      93.350433)       10    0.0%    0.0%  
+[     93.350433,     128.158050)    32438    1.4%    1.4%  
+[    128.158050,     333.311076)  2297648   95.7%   97.1%  ##########
+[    333.311076,    1542.464918)    69634    2.9%  100.0%  
+[   1542.464918,    8669.111000)      366    0.0%  100.0%  
+[   8669.111000,   50672.934371)        1    0.0%  100.0%  
+Number of requests:  2400098	Request throughput:  1.2800522666666666e+07 bit/s
+Number of responses: 2400098	Response throughput: 1.0240418133333334e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 1372.0500µs	90_Latency: 2142.5060µs	99_Latency: 4859.0280µs	Avg_Latency: 1515.4490µs	Bytes/op: 49720.08179313532	Allocs/op: 196.93027880971144	
+Histogram (unit: µs)
+Count: 2531655  Min: 155.2  Max: 15631.9  Avg: 1515.45
+------------------------------------------------------------
+[     155.190000,      155.191000)        1    0.0%    0.0%  
+[     155.191000,      155.196293)        0    0.0%    0.0%  
+[     155.196293,      155.229601)        0    0.0%    0.0%  
+[     155.229601,      155.439207)        0    0.0%    0.0%  
+[     155.439207,      156.758242)        1    0.0%    0.0%  
+[     156.758242,      165.058843)        1    0.0%    0.0%  
+[     165.058843,      217.293985)       55    0.0%    0.0%  
+[     217.293985,      546.006342)    21722    0.9%    0.9%  
+[     546.006342,     2614.571835)  2361787   93.3%   94.2%  #########
+[    2614.571835,    15631.920000)   148087    5.8%  100.0%  #
+[   15631.920000,    97549.245724)        1    0.0%  100.0%  
+Number of requests:  2531655	Request throughput:  1.350216e+07 bit/s
+Number of responses: 2531655	Response throughput: 1.0801728e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 569.8300µs	90_Latency: 978.3920µs	99_Latency: 1597.3090µs	Avg_Latency: 648.4950µs	Bytes/op: 23902.701134552895	Allocs/op: 179.03131811602753	
+Histogram (unit: µs)
+Count: 5915458  Min: 156.7  Max: 24563.6  Avg: 648.50
+------------------------------------------------------------
+[     156.724000,      156.725000)        1    0.0%    0.0%  
+[     156.725000,      156.730620)        0    0.0%    0.0%  
+[     156.730620,      156.767820)        0    0.0%    0.0%  
+[     156.767820,      157.014071)        0    0.0%    0.0%  
+[     157.014071,      158.644166)        0    0.0%    0.0%  
+[     158.644166,      169.434820)        0    0.0%    0.0%  
+[     169.434820,      240.865117)      120    0.0%    0.0%  
+[     240.865117,      713.708339)  4818311   81.5%   81.5%  ########
+[     713.708339,     3843.762701)  1095393   18.5%  100.0%  ##
+[    3843.762701,    24563.612000)     1632    0.0%  100.0%  
+[   24563.612000,   161721.662734)        1    0.0%  100.0%  
+Number of requests:  5915458	Request throughput:  3.1549109333333332e+07 bit/s
+Number of responses: 5915458	Response throughput: 2.5239287466666665e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 744.2630µs	90_Latency: 1446.0710µs	99_Latency: 2472.2250µs	Avg_Latency: 908.8430µs	Bytes/op: 46612.73689523889	Allocs/op: 211.03830373763924	
+Histogram (unit: µs)
+Count: 4221729  Min: 156.4  Max: 17276.3  Avg: 908.84
+------------------------------------------------------------
+[     156.429000,      156.430000)        1    0.0%    0.0%  
+[     156.430000,      156.435364)        0    0.0%    0.0%  
+[     156.435364,      156.469499)        0    0.0%    0.0%  
+[     156.469499,      156.686731)        0    0.0%    0.0%  
+[     156.686731,      158.069173)        0    0.0%    0.0%  
+[     158.069173,      166.866871)        0    0.0%    0.0%  
+[     166.866871,      222.854424)      116    0.0%    0.0%  
+[     222.854424,      579.152824)   445458   10.6%   10.6%  #
+[     579.152824,     2846.595210)  3755705   89.0%   99.5%  #########
+[    2846.595210,    17276.340000)    20448    0.5%  100.0%  
+[   17276.340000,   109105.590409)        1    0.0%  100.0%  
+Number of requests:  4221729	Request throughput:  2.2515888e+07 bit/s
+Number of responses: 4221729	Response throughput: 1.80127104e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 718.3900µs	90_Latency: 1022.7780µs	99_Latency: 1773.4400µs	Avg_Latency: 785.4480µs	Bytes/op: 46660.127956461816	Allocs/op: 213.20927425991724	
+Histogram (unit: µs)
+Count: 4884724  Min: 157.8  Max: 20920.0  Avg: 785.45
+------------------------------------------------------------
+[     157.814000,      157.815000)        1    0.0%    0.0%  
+[     157.815000,      157.820502)        0    0.0%    0.0%  
+[     157.820502,      157.856273)        0    0.0%    0.0%  
+[     157.856273,      158.088847)        0    0.0%    0.0%  
+[     158.088847,      159.600987)        0    0.0%    0.0%  
+[     159.600987,      169.432549)        3    0.0%    0.0%  
+[     169.432549,      233.354918)       99    0.0%    0.0%  
+[     233.354918,      648.962291)   862425   17.7%   17.7%  ##
+[     648.962291,     3351.138216)  4019770   82.3%  100.0%  ########
+[    3351.138216,    20920.015000)     2425    0.0%  100.0%  
+[   20920.015000,   135148.488683)        1    0.0%  100.0%  
+Number of requests:  4884724	Request throughput:  2.6051861333333332e+07 bit/s
+Number of responses: 4884724	Response throughput: 2.0841489066666667e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 9010.6720µs	90_Latency: 12708.0440µs	99_Latency: 18094.1760µs	Avg_Latency: 9280.8740µs	Bytes/op: 44979.27301756672	Allocs/op: 194.61550882718782	
+Histogram (unit: µs)
+Count: 3308245  Min: 461.2  Max: 54668.6  Avg: 9280.87
+------------------------------------------------------------
+[     461.168000,      461.169000)        1    0.0%    0.0%  
+[     461.169000,      461.175233)        0    0.0%    0.0%  
+[     461.175233,      461.220321)        0    0.0%    0.0%  
+[     461.220321,      461.546460)        0    0.0%    0.0%  
+[     461.546460,      463.905534)        0    0.0%    0.0%  
+[     463.905534,      480.969556)        0    0.0%    0.0%  
+[     480.969556,      604.399711)        2    0.0%    0.0%  
+[     604.399711,     1497.214011)      120    0.0%    0.0%  
+[    1497.214011,     7955.258032)  1128999   34.1%   34.1%  ###
+[    7955.258032,    54668.592000)  2179122   65.9%  100.0%  #######
+[   54668.592000,   392562.784616)        1    0.0%  100.0%  
+Number of requests:  3308245	Request throughput:  1.7643973333333332e+07 bit/s
+Number of responses: 3308245	Response throughput: 1.4115178666666667e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 4703.9110µs	90_Latency: 5865.2940µs	99_Latency: 7554.2330µs	Avg_Latency: 4794.2250µs	Bytes/op: 23903.61419485317	Allocs/op: 177.93413250405177	
+Histogram (unit: µs)
+Count: 6405223  Min: 217.5  Max: 35158.1  Avg: 4794.23
+------------------------------------------------------------
+[     217.547000,      217.548000)        1    0.0%    0.0%  
+[     217.548000,      217.553889)        0    0.0%    0.0%  
+[     217.553889,      217.594456)        0    0.0%    0.0%  
+[     217.594456,      217.873921)        0    0.0%    0.0%  
+[     217.873921,      219.799117)        0    0.0%    0.0%  
+[     219.799117,      233.061535)        0    0.0%    0.0%  
+[     233.061535,      324.424554)        0    0.0%    0.0%  
+[     324.424554,      953.812175)        0    0.0%    0.0%  
+[     953.812175,     5289.579299)  5004638   78.1%   78.1%  ########
+[    5289.579299,    35158.099000)  1400583   21.9%  100.0%  ##
+[   35158.099000,   240918.335582)        1    0.0%  100.0%  
+Number of requests:  6405223	Request throughput:  3.4161189333333336e+07 bit/s
+Number of responses: 6405223	Response throughput: 2.7328951466666665e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 6.7636ms	90_Latency: 8.8301ms	99_Latency: 11.1025ms	Avg_Latency: 7.0652ms	Bytes/op: 46587.12356516551	Allocs/op: 210.20838813224606	
+Histogram (unit: ms)
+Count: 4347714  Min:   1.9  Max:  43.9  Avg: 7.07
+------------------------------------------------------------
+[       1.896097,        1.896098)        1    0.0%    0.0%  
+[       1.896098,        1.896104)        0    0.0%    0.0%  
+[       1.896104,        1.896146)        0    0.0%    0.0%  
+[       1.896146,        1.896445)        0    0.0%    0.0%  
+[       1.896445,        1.898540)        0    0.0%    0.0%  
+[       1.898540,        1.913274)        0    0.0%    0.0%  
+[       1.913274,        2.016862)        1    0.0%    0.0%  
+[       2.016862,        2.745140)      154    0.0%    0.0%  
+[       2.745140,        7.865347)  3406744   78.4%   78.4%  ########
+[       7.865347,       43.863276)   940813   21.6%  100.0%  ##
+[      43.863276,      296.948905)        1    0.0%  100.0%  
+Number of requests:  4347714	Request throughput:  2.3187808e+07 bit/s
+Number of responses: 4347714	Response throughput: 1.85502464e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_0-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 7355.7740µs	90_Latency: 7837.5380µs	99_Latency: 9232.1460µs	Avg_Latency: 7097.4080µs	Bytes/op: 46676.443139252864	Allocs/op: 213.5237659883143	
+Histogram (unit: µs)
+Count: 4325972  Min: 242.4  Max: 36740.5  Avg: 7097.41
+------------------------------------------------------------
+[     242.361000,      242.362000)        1    0.0%    0.0%  
+[     242.362000,      242.367922)        0    0.0%    0.0%  
+[     242.367922,      242.408919)        0    0.0%    0.0%  
+[     242.408919,      242.692709)        0    0.0%    0.0%  
+[     242.692709,      244.657198)        0    0.0%    0.0%  
+[     244.657198,      258.256043)        0    0.0%    0.0%  
+[     258.256043,      352.391741)        0    0.0%    0.0%  
+[     352.391741,     1004.030167)        2    0.0%    0.0%  
+[    1004.030167,     5514.886814)    10962    0.3%    0.3%  
+[    5514.886814,    36740.528000)  4315006   99.7%  100.0%  ##########
+[   36740.528000,   252894.740801)        1    0.0%  100.0%  
+Number of requests:  4325972	Request throughput:  2.3071850666666668e+07 bit/s
+Number of responses: 4325972	Response throughput: 1.8457480533333333e+09 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 573.7530µs	90_Latency: 1529.6630µs	99_Latency: 2458.3430µs	Avg_Latency: 821.1880µs	Bytes/op: 71895.84119895338	Allocs/op: 246.10940175623657	
+Histogram (unit: µs)
+Count: 72997  Min: 242.2  Max: 9153.0  Avg: 821.19
+------------------------------------------------------------
+[    242.242000,     242.243000)      1    0.0%    0.0%  
+[    242.243000,     242.247919)      0    0.0%    0.0%  
+[    242.247919,     242.277029)      0    0.0%    0.0%  
+[    242.277029,     242.449318)      0    0.0%    0.0%  
+[    242.449318,     243.469016)      0    0.0%    0.0%  
+[    243.469016,     249.504107)      1    0.0%    0.0%  
+[    249.504107,     285.222866)     63    0.1%    0.1%  
+[    285.222866,     496.624771)  15948   21.8%   21.9%  ##
+[    496.624771,    1747.809464)  55445   76.0%   97.9%  ########
+[   1747.809464,    9152.961000)   1538    2.1%  100.0%  
+[   9152.961000,   52980.438735)      1    0.0%  100.0%  
+Number of requests:  72997	Request throughput:  389317.3333333333 bit/s
+Number of responses: 72997	Response throughput: 3.1145386666666668e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 4.0480ms	90_Latency: 4.2221ms	99_Latency: 5.0148ms	Avg_Latency: 4.0398ms	Bytes/op: 24801.52919781774	Allocs/op: 225.35811948541792	
+Histogram (unit: ms)
+Count: 14847  Min:   2.7  Max:   9.8  Avg: 4.04
+------------------------------------------------------------
+[      2.710857,       2.710858)      1    0.0%    0.0%  
+[      2.710858,       2.710863)      0    0.0%    0.0%  
+[      2.710863,       2.710890)      0    0.0%    0.0%  
+[      2.710890,       2.711049)      0    0.0%    0.0%  
+[      2.711049,       2.711967)      0    0.0%    0.0%  
+[      2.711967,       2.717262)      0    0.0%    0.0%  
+[      2.717262,       2.747825)      0    0.0%    0.0%  
+[      2.747825,       2.924227)      4    0.0%    0.0%  
+[      2.924227,       3.942368)   3171   21.4%   21.4%  ##
+[      3.942368,       9.818783)  11670   78.6%  100.0%  ########
+[      9.818783,      43.735770)      1    0.0%  100.0%  
+Number of requests:  14847	Request throughput:  79184 bit/s
+Number of responses: 14847	Response throughput: 6.33472e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 345.9610µs	90_Latency: 1302.6030µs	99_Latency: 2393.3460µs	Avg_Latency: 523.8610µs	Bytes/op: 47525.307456945535	Allocs/op: 257.0662907596818	
+Histogram (unit: µs)
+Count: 114390  Min: 190.4  Max: 11092.5  Avg: 523.86
+------------------------------------------------------------
+[     190.447000,      190.448000)       1    0.0%    0.0%  
+[     190.448000,      190.453053)       0    0.0%    0.0%  
+[     190.453053,      190.483635)       0    0.0%    0.0%  
+[     190.483635,      190.668736)       0    0.0%    0.0%  
+[     190.668736,      191.789092)       0    0.0%    0.0%  
+[     191.789092,      198.570213)       4    0.0%    0.0%  
+[     198.570213,      239.613970)     445    0.4%    0.4%  
+[     239.613970,      488.037467)   84439   73.8%   74.2%  #######
+[     488.037467,     1991.657989)   27651   24.2%   98.4%  ##
+[    1991.657989,    11092.547000)    1849    1.6%  100.0%  
+[   11092.547000,    66177.044436)       1    0.0%  100.0%  
+Number of requests:  114390	Request throughput:  610080 bit/s
+Number of responses: 114390	Response throughput: 4.88064e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 346.6070µs	90_Latency: 1353.2900µs	99_Latency: 2435.9830µs	Avg_Latency: 529.0280µs	Bytes/op: 47385.96062922618	Allocs/op: 257.2539856287848	
+Histogram (unit: µs)
+Count: 113282  Min: 191.6  Max: 8825.2  Avg: 529.03
+------------------------------------------------------------
+[    191.622000,     191.623000)       1    0.0%    0.0%  
+[    191.623000,     191.627898)       0    0.0%    0.0%  
+[    191.627898,     191.656784)       0    0.0%    0.0%  
+[    191.656784,     191.827146)       0    0.0%    0.0%  
+[    191.827146,     192.831905)       0    0.0%    0.0%  
+[    192.831905,     198.757742)       1    0.0%    0.0%  
+[    198.757742,     233.706966)      85    0.1%    0.1%  
+[    233.706966,     439.829446)   86886   76.7%   76.8%  ########
+[    439.829446,    1655.492421)   23044   20.3%   97.1%  ##
+[   1655.492421,    8825.193000)    3264    2.9%  100.0%  
+[   8825.193000,   51110.437733)       1    0.0%  100.0%  
+Number of requests:  113282	Request throughput:  604170.6666666666 bit/s
+Number of responses: 113282	Response throughput: 4.8333653333333336e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 910.2150µs	90_Latency: 1923.8250µs	99_Latency: 3078.9630µs	Avg_Latency: 1123.6480µs	Bytes/op: 64645.554188836795	Allocs/op: 206.17275012710485	
+Histogram (unit: µs)
+Count: 426813  Min: 328.9  Max: 23477.4  Avg: 1123.65
+------------------------------------------------------------
+[     328.891000,      328.892000)       1    0.0%    0.0%  
+[     328.892000,      328.897581)       0    0.0%    0.0%  
+[     328.897581,      328.934307)       0    0.0%    0.0%  
+[     328.934307,      329.175997)       0    0.0%    0.0%  
+[     329.175997,      330.766517)       0    0.0%    0.0%  
+[     330.766517,      341.233449)       2    0.0%    0.0%  
+[     341.233449,      410.114480)      37    0.0%    0.0%  
+[     410.114480,      863.408410)  182467   42.8%   42.8%  ####
+[     863.408410,     3846.455911)  243140   57.0%   99.7%  ######
+[    3846.455911,    23477.366000)    1165    0.3%  100.0%  
+[   23477.366000,   152664.926992)       1    0.0%  100.0%  
+Number of requests:  426813	Request throughput:  2.276336e+06 bit/s
+Number of responses: 426813	Response throughput: 1.8210688e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 19.7886ms	90_Latency: 20.5200ms	99_Latency: 21.7226ms	Avg_Latency: 19.8404ms	Bytes/op: 24435.258059183336	Allocs/op: 185.71627541742436	
+Histogram (unit: ms)
+Count: 24196  Min:   3.7  Max:  27.6  Avg: 19.84
+------------------------------------------------------------
+[       3.673030,        3.673031)      1    0.0%    0.0%  
+[       3.673031,        3.673037)      0    0.0%    0.0%  
+[       3.673037,        3.673074)      0    0.0%    0.0%  
+[       3.673074,        3.673318)      0    0.0%    0.0%  
+[       3.673318,        3.674934)      0    0.0%    0.0%  
+[       3.674934,        3.685610)      0    0.0%    0.0%  
+[       3.685610,        3.756131)      0    0.0%    0.0%  
+[       3.756131,        4.221991)      0    0.0%    0.0%  
+[       4.221991,        7.299435)      5    0.0%    0.0%  
+[       7.299435,       27.628837)  24189  100.0%  100.0%  ##########
+[      27.628837,      161.923621)      1    0.0%  100.0%  
+Number of requests:  24196	Request throughput:  129045.33333333333 bit/s
+Number of responses: 24196	Response throughput: 1.0323626666666666e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 1034.0430µs	90_Latency: 1936.3780µs	99_Latency: 3063.7300µs	Avg_Latency: 1183.2420µs	Bytes/op: 46908.36823140333	Allocs/op: 219.66989979762081	
+Histogram (unit: µs)
+Count: 405180  Min: 229.5  Max: 17471.7  Avg: 1183.24
+------------------------------------------------------------
+[     229.451000,      229.452000)       1    0.0%    0.0%  
+[     229.452000,      229.457369)       0    0.0%    0.0%  
+[     229.457369,      229.491563)       0    0.0%    0.0%  
+[     229.491563,      229.709344)       0    0.0%    0.0%  
+[     229.709344,      231.096372)       0    0.0%    0.0%  
+[     231.096372,      239.930245)       2    0.0%    0.0%  
+[     239.930245,      296.192502)      22    0.0%    0.0%  
+[     296.192502,      654.522484)   59468   14.7%   14.7%  #
+[     654.522484,     2936.698536)  340263   84.0%   98.7%  ########
+[    2936.698536,    17471.702000)    5423    1.3%  100.0%  
+[   17471.702000,   110044.019350)       1    0.0%  100.0%  
+Number of requests:  405180	Request throughput:  2.16096e+06 bit/s
+Number of responses: 405180	Response throughput: 1.728768e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 907.1560µs	90_Latency: 1884.8320µs	99_Latency: 3112.9560µs	Avg_Latency: 1087.3710µs	Bytes/op: 46771.64569504875	Allocs/op: 219.5450480697249	
+Histogram (unit: µs)
+Count: 440818  Min: 254.8  Max: 16795.0  Avg: 1087.37
+------------------------------------------------------------
+[     254.764000,      254.765000)       1    0.0%    0.0%  
+[     254.765000,      254.770340)       0    0.0%    0.0%  
+[     254.770340,      254.804190)       0    0.0%    0.0%  
+[     254.804190,      255.018789)       0    0.0%    0.0%  
+[     255.018789,      256.379252)       0    0.0%    0.0%  
+[     256.379252,      265.004006)       1    0.0%    0.0%  
+[     265.004006,      319.681272)      39    0.0%    0.0%  
+[     319.681272,      666.311817)   51219   11.6%   11.6%  #
+[     666.311817,     2863.801647)  381670   86.6%   98.2%  #########
+[    2863.801647,    16794.950000)    7887    1.8%  100.0%  
+[   16794.950000,   105112.489304)       1    0.0%  100.0%  
+Number of requests:  440818	Request throughput:  2.3510293333333335e+06 bit/s
+Number of responses: 440818	Response throughput: 1.8808234666666666e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 5978.3440µs	90_Latency: 9137.1450µs	99_Latency: 15319.6250µs	Avg_Latency: 6401.6230µs	Bytes/op: 53256.25664046014	Allocs/op: 195.1405176914903	
+Histogram (unit: µs)
+Count: 599469  Min: 693.4  Max: 42556.5  Avg: 6401.62
+------------------------------------------------------------
+[     693.369000,      693.370000)       1    0.0%    0.0%  
+[     693.370000,      693.376029)       0    0.0%    0.0%  
+[     693.376029,      693.418402)       0    0.0%    0.0%  
+[     693.418402,      693.716225)       0    0.0%    0.0%  
+[     693.716225,      695.809512)       0    0.0%    0.0%  
+[     695.809512,      710.522440)       0    0.0%    0.0%  
+[     710.522440,      813.934063)       8    0.0%    0.0%  
+[     813.934063,     1540.775367)     779    0.1%    0.1%  
+[    1540.775367,     6649.468838)  384929   64.2%   64.3%  ######
+[    6649.468838,    42556.549000)  213751   35.7%  100.0%  ####
+[   42556.549000,   294933.876620)       1    0.0%  100.0%  
+Number of requests:  599469	Request throughput:  3.197168e+06 bit/s
+Number of responses: 599469	Response throughput: 2.5577344e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 151.8330ms	90_Latency: 216.2619ms	99_Latency: 255.6034ms	Avg_Latency: 159.2894ms	Bytes/op: 24475.097469036078	Allocs/op: 181.64442235201525	
+Histogram (unit: ms)
+Count: 24141  Min:  20.9  Max: 409.0  Avg: 159.29
+------------------------------------------------------------
+[       20.946158,        20.946159)      1    0.0%    0.0%  
+[       20.946159,        20.946167)      0    0.0%    0.0%  
+[       20.946167,        20.946239)      0    0.0%    0.0%  
+[       20.946239,        20.946887)      0    0.0%    0.0%  
+[       20.946887,        20.952724)      1    0.0%    0.0%  
+[       20.952724,        21.005260)      3    0.0%    0.0%  
+[       21.005260,        21.478177)      2    0.0%    0.0%  
+[       21.478177,        25.735193)      0    0.0%    0.0%  
+[       25.735193,        64.055282)      8    0.0%    0.1%  
+[       64.055282,       408.998538)  24125   99.9%  100.0%  ##########
+[      408.998538,      3514.050041)      1    0.0%  100.0%  
+Number of requests:  24141	Request throughput:  128752 bit/s
+Number of responses: 24141	Response throughput: 1.030016e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 5067.3980µs	90_Latency: 7626.1470µs	99_Latency: 11719.3500µs	Avg_Latency: 5361.6130µs	Bytes/op: 46672.15591723043	Allocs/op: 209.84351562510912	
+Histogram (unit: µs)
+Count: 715867  Min: 573.3  Max: 40885.1  Avg: 5361.61
+------------------------------------------------------------
+[     573.336000,      573.337000)       1    0.0%    0.0%  
+[     573.337000,      573.342999)       0    0.0%    0.0%  
+[     573.342999,      573.384989)       0    0.0%    0.0%  
+[     573.384989,      573.678881)       0    0.0%    0.0%  
+[     573.678881,      575.735894)       0    0.0%    0.0%  
+[     575.735894,      590.133322)       0    0.0%    0.0%  
+[     590.133322,      690.903711)       3    0.0%    0.0%  
+[     690.903711,     1396.215178)     357    0.0%    0.1%  
+[    1396.215178,     6332.826726)  544429   76.1%   76.1%  ########
+[    6332.826726,    40885.127000)  171076   23.9%  100.0%  ##
+[   40885.127000,   282723.368174)       1    0.0%  100.0%  
+Number of requests:  715867	Request throughput:  3.8179573333333335e+06 bit/s
+Number of responses: 715867	Response throughput: 3.054365866666667e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 5082.9720µs	90_Latency: 7200.7760µs	99_Latency: 10616.0470µs	Avg_Latency: 5308.9030µs	Bytes/op: 46634.44873448198	Allocs/op: 210.7447945781699	
+Histogram (unit: µs)
+Count: 722708  Min: 330.6  Max: 39074.8  Avg: 5308.90
+------------------------------------------------------------
+[     330.572000,      330.573000)       1    0.0%    0.0%  
+[     330.573000,      330.578968)       0    0.0%    0.0%  
+[     330.578968,      330.620559)       0    0.0%    0.0%  
+[     330.620559,      330.910378)       0    0.0%    0.0%  
+[     330.910378,      332.929960)       0    0.0%    0.0%  
+[     332.929960,      347.003251)       1    0.0%    0.0%  
+[     347.003251,      445.071804)       0    0.0%    0.0%  
+[     445.071804,     1128.454363)      45    0.0%    0.0%  
+[    1128.454363,     5890.548923)  516825   71.5%   71.5%  #######
+[    5890.548923,    39074.809000)  205835   28.5%  100.0%  ###
+[   39074.809000,   270316.566820)       1    0.0%  100.0%  
+Number of requests:  722708	Request throughput:  3.8544426666666665e+06 bit/s
+Number of responses: 722708	Response throughput: 3.083554133333333e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 44.2983ms	90_Latency: 68.3478ms	99_Latency: 94.9945ms	Avg_Latency: 47.1070ms	Bytes/op: 47780.63984050303	Allocs/op: 193.88515451269075	
+Histogram (unit: ms)
+Count: 652050  Min:   8.5  Max: 146.3  Avg: 47.11
+------------------------------------------------------------
+[        8.492714,         8.492715)       1    0.0%    0.0%  
+[        8.492715,         8.492722)       0    0.0%    0.0%  
+[        8.492722,         8.492778)       0    0.0%    0.0%  
+[        8.492778,         8.493231)       0    0.0%    0.0%  
+[        8.493231,         8.496859)       0    0.0%    0.0%  
+[        8.496859,         8.525968)       0    0.0%    0.0%  
+[        8.525968,         8.759531)       2    0.0%    0.0%  
+[        8.759531,        10.633546)     102    0.0%    0.0%  
+[       10.633546,        25.669884)   36108    5.5%    5.6%  #
+[       25.669884,       146.315355)  615836   94.4%  100.0%  #########
+[      146.315355,      1114.325647)       1    0.0%  100.0%  
+Number of requests:  652050	Request throughput:  3.4776e+06 bit/s
+Number of responses: 652050	Response throughput: 2.78208e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 1139.4219ms	90_Latency: 2183.9201ms	99_Latency: 2264.0650ms	Avg_Latency: 1262.4525ms	Bytes/op: 24000.98682284041	Allocs/op: 180.62933138116153	
+Histogram (unit: ms)
+Count: 24588  Min:  17.7  Max: 4390.5  Avg: 1262.45
+------------------------------------------------------------
+[        17.746484,         17.746485)      1    0.0%    0.0%  
+[        17.746485,         17.746496)      0    0.0%    0.0%  
+[        17.746496,         17.746623)      0    0.0%    0.0%  
+[        17.746623,         17.748119)      0    0.0%    0.0%  
+[        17.748119,         17.765750)      0    0.0%    0.0%  
+[        17.765750,         17.973458)      5    0.0%    0.0%  
+[        17.973458,         20.420544)      0    0.0%    0.0%  
+[        20.420544,         49.250530)     11    0.0%    0.1%  
+[        49.250530,        388.906793)    134    0.5%    0.6%  
+[       388.906793,       4390.517321)  24436   99.4%  100.0%  ##########
+[      4390.517321,      51534.905925)      1    0.0%  100.0%  
+Number of requests:  24588	Request throughput:  131136 bit/s
+Number of responses: 24588	Response throughput: 1.049088e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 33.8058ms	90_Latency: 49.3742ms	99_Latency: 65.5487ms	Avg_Latency: 35.2595ms	Bytes/op: 46583.04317209948	Allocs/op: 207.77834334946246	
+Histogram (unit: ms)
+Count: 871095  Min:   4.9  Max: 118.4  Avg: 35.26
+------------------------------------------------------------
+[        4.931349,         4.931350)       1    0.0%    0.0%  
+[        4.931350,         4.931357)       0    0.0%    0.0%  
+[        4.931357,         4.931411)       0    0.0%    0.0%  
+[        4.931411,         4.931833)       0    0.0%    0.0%  
+[        4.931833,         4.935151)       0    0.0%    0.0%  
+[        4.935151,         4.961200)       3    0.0%    0.0%  
+[        4.961200,         5.165748)      23    0.0%    0.0%  
+[        5.165748,         6.771904)      17    0.0%    0.0%  
+[        6.771904,        19.383803)   34255    3.9%    3.9%  
+[       19.383803,       118.415260)  836795   96.1%  100.0%  ##########
+[      118.415260,       896.032478)       1    0.0%  100.0%  
+Number of requests:  871095	Request throughput:  4.64584e+06 bit/s
+Number of responses: 871095	Response throughput: 3.716672e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_0s-kbps_10240-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 33.1265ms	90_Latency: 43.9419ms	99_Latency: 56.3552ms	Avg_Latency: 33.9789ms	Bytes/op: 46632.26825914934	Allocs/op: 209.56697242835543	
+Histogram (unit: ms)
+Count: 904081  Min:   8.6  Max:  77.3  Avg: 33.98
+------------------------------------------------------------
+[       8.563955,        8.563956)       1    0.0%    0.0%  
+[       8.563956,        8.563962)       0    0.0%    0.0%  
+[       8.563962,        8.564010)       0    0.0%    0.0%  
+[       8.564010,        8.564365)       0    0.0%    0.0%  
+[       8.564365,        8.566998)       0    0.0%    0.0%  
+[       8.566998,        8.586552)       1    0.0%    0.0%  
+[       8.586552,        8.731786)       0    0.0%    0.0%  
+[       8.731786,        9.810431)       9    0.0%    0.0%  
+[       9.810431,       17.821501)    8531    0.9%    0.9%  
+[      17.821501,       77.319522)  895538   99.1%  100.0%  ##########
+[      77.319522,      519.209860)       1    0.0%  100.0%  
+Number of requests:  904081	Request throughput:  4.821765333333333e+06 bit/s
+Number of responses: 904081	Response throughput: 3.857412266666667e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.7674ms	90_Latency: 82.0114ms	99_Latency: 83.8891ms	Avg_Latency: 81.8086ms	Bytes/op: 76499.13896457765	Allocs/op: 241.08446866485014	
+Histogram (unit: ms)
+Count: 734  Min:  80.7  Max:  85.6  Avg: 81.81
+------------------------------------------------------------
+[      80.701122,       80.701123)    1    0.1%    0.1%  
+[      80.701123,       80.701128)    0    0.0%    0.1%  
+[      80.701128,       80.701153)    0    0.0%    0.1%  
+[      80.701153,       80.701292)    0    0.0%    0.1%  
+[      80.701292,       80.702062)    0    0.0%    0.1%  
+[      80.702062,       80.706324)    0    0.0%    0.1%  
+[      80.706324,       80.729921)    0    0.0%    0.1%  
+[      80.729921,       80.860566)    2    0.3%    0.4%  
+[      80.860566,       81.583870)  101   13.8%   14.2%  #
+[      81.583870,       85.588393)  629   85.7%   99.9%  #########
+[      85.588393,      107.759143)    1    0.1%  100.0%  
+Number of requests:  734	Request throughput:  3914.6666666666665 bit/s
+Number of responses: 734	Response throughput: 313173.3333333333 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.3595ms	90_Latency: 81.5403ms	99_Latency: 81.7505ms	Avg_Latency: 81.3567ms	Bytes/op: 24536.08672086721	Allocs/op: 218.01355013550136	
+Histogram (unit: ms)
+Count: 738  Min:  80.6  Max:  84.8  Avg: 81.36
+------------------------------------------------------------
+[      80.637084,       80.637085)    1    0.1%    0.1%  
+[      80.637085,       80.637089)    0    0.0%    0.1%  
+[      80.637089,       80.637113)    0    0.0%    0.1%  
+[      80.637113,       80.637244)    0    0.0%    0.1%  
+[      80.637244,       80.637954)    0    0.0%    0.1%  
+[      80.637954,       80.641810)    0    0.0%    0.1%  
+[      80.641810,       80.662755)    0    0.0%    0.1%  
+[      80.662755,       80.776509)    5    0.7%    0.8%  
+[      80.776509,       81.394348)  446   60.4%   61.2%  ######
+[      81.394348,       84.750032)  285   38.6%   99.9%  ####
+[      84.750032,      102.975848)    1    0.1%  100.0%  
+Number of requests:  738	Request throughput:  3936 bit/s
+Number of responses: 738	Response throughput: 314880 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.5526ms	90_Latency: 81.8194ms	99_Latency: 82.5087ms	Avg_Latency: 81.5590ms	Bytes/op: 47439.934782608696	Allocs/op: 251.5326086956522	
+Histogram (unit: ms)
+Count: 736  Min:  80.8  Max:  84.1  Avg: 81.56
+------------------------------------------------------------
+[      80.756907,       80.756908)    1    0.1%    0.1%  
+[      80.756908,       80.756912)    0    0.0%    0.1%  
+[      80.756912,       80.756935)    0    0.0%    0.1%  
+[      80.756935,       80.757057)    0    0.0%    0.1%  
+[      80.757057,       80.757706)    0    0.0%    0.1%  
+[      80.757706,       80.761153)    0    0.0%    0.1%  
+[      80.761153,       80.779477)    0    0.0%    0.1%  
+[      80.779477,       80.876890)    4    0.5%    0.7%  
+[      80.876890,       81.394743)  139   18.9%   19.6%  ##
+[      81.394743,       84.147674)  591   80.3%   99.9%  ########
+[      84.147674,       98.782377)    1    0.1%  100.0%  
+Number of requests:  736	Request throughput:  3925.3333333333335 bit/s
+Number of responses: 736	Response throughput: 314026.6666666667 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.5685ms	90_Latency: 81.7807ms	99_Latency: 82.0063ms	Avg_Latency: 81.5547ms	Bytes/op: 47337.63043478261	Allocs/op: 252.3451086956522	
+Histogram (unit: ms)
+Count: 736  Min:  80.9  Max:  83.1  Avg: 81.55
+------------------------------------------------------------
+[      80.873182,       80.873183)    1    0.1%    0.1%  
+[      80.873183,       80.873187)    0    0.0%    0.1%  
+[      80.873187,       80.873208)    0    0.0%    0.1%  
+[      80.873208,       80.873313)    0    0.0%    0.1%  
+[      80.873313,       80.873846)    0    0.0%    0.1%  
+[      80.873846,       80.876553)    0    0.0%    0.1%  
+[      80.876553,       80.890293)    0    0.0%    0.1%  
+[      80.890293,       80.960043)    3    0.4%    0.5%  
+[      80.960043,       81.314115)   64    8.7%    9.2%  #
+[      81.314115,       83.111489)  667   90.6%   99.9%  #########
+[      83.111489,       92.235483)    1    0.1%  100.0%  
+Number of requests:  736	Request throughput:  3925.3333333333335 bit/s
+Number of responses: 736	Response throughput: 314026.6666666667 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.8879ms	90_Latency: 82.6910ms	99_Latency: 84.1228ms	Avg_Latency: 81.9460ms	Bytes/op: 95258.90052891998	Allocs/op: 208.7121651595291	
+Histogram (unit: ms)
+Count: 5861  Min:  80.5  Max:  87.9  Avg: 81.95
+------------------------------------------------------------
+[      80.541859,       80.541860)     1    0.0%    0.0%  
+[      80.541860,       80.541865)     0    0.0%    0.0%  
+[      80.541865,       80.541893)     0    0.0%    0.0%  
+[      80.541893,       80.542054)     0    0.0%    0.0%  
+[      80.542054,       80.542988)     0    0.0%    0.0%  
+[      80.542988,       80.548400)     0    0.0%    0.0%  
+[      80.548400,       80.579772)     1    0.0%    0.0%  
+[      80.579772,       80.761603)    28    0.5%    0.5%  
+[      80.761603,       81.815502)  2577   44.0%   44.5%  ####
+[      81.815502,       87.923938)  3253   55.5%  100.0%  ######
+[      87.923938,      123.328644)     1    0.0%  100.0%  
+Number of requests:  5861	Request throughput:  31258.666666666668 bit/s
+Number of responses: 5861	Response throughput: 2.5006933333333335e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.7126ms	90_Latency: 82.3989ms	99_Latency: 83.1078ms	Avg_Latency: 81.7441ms	Bytes/op: 24361.243022464263	Allocs/op: 187.98893805309734	
+Histogram (unit: ms)
+Count: 5876  Min:  80.2  Max:  85.8  Avg: 81.74
+------------------------------------------------------------
+[      80.201320,       80.201321)     1    0.0%    0.0%  
+[      80.201321,       80.201326)     0    0.0%    0.0%  
+[      80.201326,       80.201352)     0    0.0%    0.0%  
+[      80.201352,       80.201498)     0    0.0%    0.0%  
+[      80.201498,       80.202320)     0    0.0%    0.0%  
+[      80.202320,       80.206942)     0    0.0%    0.0%  
+[      80.206942,       80.232932)     0    0.0%    0.0%  
+[      80.232932,       80.379076)     4    0.1%    0.1%  
+[      80.379076,       81.200858)   967   16.5%   16.5%  ##
+[      81.200858,       85.821809)  4903   83.4%  100.0%  ########
+[      85.821809,      111.805826)     1    0.0%  100.0%  
+Number of requests:  5876	Request throughput:  31338.666666666668 bit/s
+Number of responses: 5876	Response throughput: 2.5070933333333335e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.7859ms	90_Latency: 82.5951ms	99_Latency: 83.6028ms	Avg_Latency: 81.8289ms	Bytes/op: 47010.80115863009	Allocs/op: 220.85891974782757	
+Histogram (unit: ms)
+Count: 5869  Min:  80.1  Max:  87.7  Avg: 81.83
+------------------------------------------------------------
+[      80.062368,       80.062369)     1    0.0%    0.0%  
+[      80.062369,       80.062374)     0    0.0%    0.0%  
+[      80.062374,       80.062402)     0    0.0%    0.0%  
+[      80.062402,       80.062565)     0    0.0%    0.0%  
+[      80.062565,       80.063513)     0    0.0%    0.0%  
+[      80.063513,       80.069030)     0    0.0%    0.0%  
+[      80.069030,       80.101123)     0    0.0%    0.0%  
+[      80.101123,       80.287817)     7    0.1%    0.1%  
+[      80.287817,       81.373871)  1371   23.4%   23.5%  ##
+[      81.373871,       87.691768)  4489   76.5%  100.0%  ########
+[      87.691768,      124.444845)     1    0.0%  100.0%  
+Number of requests:  5869	Request throughput:  31301.333333333332 bit/s
+Number of responses: 5869	Response throughput: 2.5041066666666665e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.5354ms	90_Latency: 82.3213ms	99_Latency: 82.8511ms	Avg_Latency: 81.5911ms	Bytes/op: 46745.39201359388	Allocs/op: 218.76040781648257	
+Histogram (unit: ms)
+Count: 5885  Min:  80.2  Max:  84.7  Avg: 81.59
+------------------------------------------------------------
+[      80.200108,       80.200109)     1    0.0%    0.0%  
+[      80.200109,       80.200113)     0    0.0%    0.0%  
+[      80.200113,       80.200138)     0    0.0%    0.0%  
+[      80.200138,       80.200274)     0    0.0%    0.0%  
+[      80.200274,       80.201017)     0    0.0%    0.0%  
+[      80.201017,       80.205100)     0    0.0%    0.0%  
+[      80.205100,       80.227521)     0    0.0%    0.0%  
+[      80.227521,       80.350634)     4    0.1%    0.1%  
+[      80.350634,       81.026661)   779   13.2%   13.3%  #
+[      81.026661,       84.738786)  5100   86.7%  100.0%  #########
+[      84.738786,      105.122412)     1    0.0%  100.0%  
+Number of requests:  5885	Request throughput:  31386.666666666668 bit/s
+Number of responses: 5885	Response throughput: 2.5109333333333335e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 82.1521ms	90_Latency: 83.1862ms	99_Latency: 85.8934ms	Avg_Latency: 82.2817ms	Bytes/op: 53377.558163440124	Allocs/op: 198.75460424875791	
+Histogram (unit: ms)
+Count: 46696  Min:  80.2  Max:  92.5  Avg: 82.28
+------------------------------------------------------------
+[      80.230456,       80.230457)      1    0.0%    0.0%  
+[      80.230457,       80.230462)      0    0.0%    0.0%  
+[      80.230462,       80.230494)      0    0.0%    0.0%  
+[      80.230494,       80.230687)      0    0.0%    0.0%  
+[      80.230687,       80.231872)      0    0.0%    0.0%  
+[      80.231872,       80.239140)      0    0.0%    0.0%  
+[      80.239140,       80.283725)      3    0.0%    0.0%  
+[      80.283725,       80.557212)     43    0.1%    0.1%  
+[      80.557212,       82.234788)  25562   54.7%   54.8%  #####
+[      82.234788,       92.525097)  21086   45.2%  100.0%  #####
+[      92.525097,      155.646207)      1    0.0%  100.0%  
+Number of requests:  46696	Request throughput:  249045.33333333334 bit/s
+Number of responses: 46696	Response throughput: 1.9923626666666668e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.7550ms	90_Latency: 82.7412ms	99_Latency: 84.8088ms	Avg_Latency: 82.1456ms	Bytes/op: 24559.090411427595	Allocs/op: 182.13345736036268	
+Histogram (unit: ms)
+Count: 46764  Min:  80.1  Max: 245.8  Avg: 82.15
+------------------------------------------------------------
+[       80.096844,        80.096845)      1    0.0%    0.0%  
+[       80.096845,        80.096852)      0    0.0%    0.0%  
+[       80.096852,        80.096911)      0    0.0%    0.0%  
+[       80.096911,        80.097393)      0    0.0%    0.0%  
+[       80.097393,        80.101342)      1    0.0%    0.0%  
+[       80.101342,        80.133680)      3    0.0%    0.0%  
+[       80.133680,        80.398512)     82    0.2%    0.2%  
+[       80.398512,        82.567342)  40430   86.5%   86.6%  #########
+[       82.567342,       100.328870)   6110   13.1%   99.7%  #
+[      100.328870,       245.786077)    136    0.3%  100.0%  
+[      245.786077,      1437.001112)      1    0.0%  100.0%  
+Number of requests:  46764	Request throughput:  249408 bit/s
+Number of responses: 46764	Response throughput: 1.995264e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.9898ms	90_Latency: 83.2792ms	99_Latency: 86.1806ms	Avg_Latency: 82.1720ms	Bytes/op: 46977.371394359274	Allocs/op: 215.83141959073706	
+Histogram (unit: ms)
+Count: 46767  Min:  80.2  Max: 100.5  Avg: 82.17
+------------------------------------------------------------
+[       80.241137,        80.241138)      1    0.0%    0.0%  
+[       80.241138,        80.241143)      0    0.0%    0.0%  
+[       80.241143,        80.241179)      0    0.0%    0.0%  
+[       80.241179,        80.241410)      0    0.0%    0.0%  
+[       80.241410,        80.242905)      0    0.0%    0.0%  
+[       80.242905,        80.252605)      1    0.0%    0.0%  
+[       80.252605,        80.315507)      4    0.0%    0.0%  
+[       80.315507,        80.723416)    528    1.1%    1.1%  
+[       80.723416,        83.368644)  41988   89.8%   90.9%  #########
+[       83.368644,       100.522545)   4244    9.1%  100.0%  #
+[      100.522545,       211.762981)      1    0.0%  100.0%  
+Number of requests:  46767	Request throughput:  249424 bit/s
+Number of responses: 46767	Response throughput: 1.995392e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.9066ms	90_Latency: 82.7486ms	99_Latency: 84.0879ms	Avg_Latency: 81.9568ms	Bytes/op: 46659.487236356654	Allocs/op: 212.71766437056152	
+Histogram (unit: ms)
+Count: 46891  Min:  80.2  Max:  90.0  Avg: 81.96
+------------------------------------------------------------
+[      80.155821,       80.155822)      1    0.0%    0.0%  
+[      80.155822,       80.155827)      0    0.0%    0.0%  
+[      80.155827,       80.155857)      0    0.0%    0.0%  
+[      80.155857,       80.156035)      0    0.0%    0.0%  
+[      80.156035,       80.157104)      0    0.0%    0.0%  
+[      80.157104,       80.163501)      0    0.0%    0.0%  
+[      80.163501,       80.201786)      0    0.0%    0.0%  
+[      80.201786,       80.430923)     69    0.1%    0.1%  
+[      80.430923,       81.802333)  20226   43.1%   43.3%  ####
+[      81.802333,       90.010344)  26594   56.7%  100.0%  ######
+[      90.010344,      139.136020)      1    0.0%  100.0%  
+Number of requests:  46891	Request throughput:  250085.33333333334 bit/s
+Number of responses: 46891	Response throughput: 2.0006826666666668e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 83.2041ms	90_Latency: 90.2609ms	99_Latency: 102.8940ms	Avg_Latency: 84.8639ms	Bytes/op: 49236.6178583458	Allocs/op: 197.22211669602382	
+Histogram (unit: ms)
+Count: 362206  Min:  80.1  Max: 157.3  Avg: 84.86
+------------------------------------------------------------
+[       80.134533,        80.134534)       1    0.0%    0.0%  
+[       80.134534,        80.134541)       0    0.0%    0.0%  
+[       80.134541,        80.134590)       0    0.0%    0.0%  
+[       80.134590,        80.134959)       0    0.0%    0.0%  
+[       80.134959,        80.137736)       0    0.0%    0.0%  
+[       80.137736,        80.158629)       2    0.0%    0.0%  
+[       80.158629,        80.315809)      58    0.0%    0.0%  
+[       80.315809,        81.498273)   41891   11.6%   11.6%  #
+[       81.498273,        90.393926)  284981   78.7%   90.3%  ########
+[       90.393926,       157.315799)   35272    9.7%  100.0%  #
+[      157.315799,       660.768059)       1    0.0%  100.0%  
+Number of requests:  362206	Request throughput:  1.9317653333333333e+06 bit/s
+Number of responses: 362206	Response throughput: 1.5454122666666666e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 82.1716ms	90_Latency: 85.7691ms	99_Latency: 92.8706ms	Avg_Latency: 84.1773ms	Bytes/op: 24055.770697427302	Allocs/op: 179.54372819341518	
+Histogram (unit: ms)
+Count: 365142  Min:  80.1  Max: 904.8  Avg: 84.18
+------------------------------------------------------------
+[       80.060071,        80.060072)       1    0.0%    0.0%  
+[       80.060072,        80.060081)       0    0.0%    0.0%  
+[       80.060081,        80.060167)       0    0.0%    0.0%  
+[       80.060167,        80.061009)       0    0.0%    0.0%  
+[       80.061009,        80.069250)       0    0.0%    0.0%  
+[       80.069250,        80.149916)       5    0.0%    0.0%  
+[       80.149916,        80.939488)   30949    8.5%    8.5%  #
+[       80.939488,        88.667904)  322519   88.3%   96.8%  #########
+[       88.667904,       164.314539)   10082    2.8%   99.6%  
+[      164.314539,       904.752598)    1585    0.4%  100.0%  
+[      904.752598,      8152.246377)       1    0.0%  100.0%  
+Number of requests:  365142	Request throughput:  1.947424e+06 bit/s
+Number of responses: 365142	Response throughput: 1.5579392e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 83.1876ms	90_Latency: 88.2030ms	99_Latency: 96.7230ms	Avg_Latency: 84.1857ms	Bytes/op: 46649.98020409393	Allocs/op: 211.2873446426713	
+Histogram (unit: ms)
+Count: 365126  Min:  80.1  Max: 135.1  Avg: 84.19
+------------------------------------------------------------
+[       80.135168,        80.135169)       1    0.0%    0.0%  
+[       80.135169,        80.135175)       0    0.0%    0.0%  
+[       80.135175,        80.135220)       0    0.0%    0.0%  
+[       80.135220,        80.135548)       1    0.0%    0.0%  
+[       80.135548,        80.137923)       1    0.0%    0.0%  
+[       80.137923,        80.155123)       6    0.0%    0.0%  
+[       80.155123,        80.279734)     142    0.0%    0.0%  
+[       80.279734,        81.182481)   32710    9.0%    9.0%  #
+[       81.182481,        87.722472)  289590   79.3%   88.3%  ########
+[       87.722472,       135.101711)   42674   11.7%  100.0%  #
+[      135.101711,       478.342599)       1    0.0%  100.0%  
+Number of requests:  365126	Request throughput:  1.9473386666666667e+06 bit/s
+Number of responses: 365126	Response throughput: 1.5578709333333334e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_0-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 82.1923ms	90_Latency: 85.4734ms	99_Latency: 91.1520ms	Avg_Latency: 82.8371ms	Bytes/op: 46661.30525317155	Allocs/op: 212.5889233572216	
+Histogram (unit: ms)
+Count: 371033  Min:  80.1  Max: 111.2  Avg: 82.84
+------------------------------------------------------------
+[       80.149091,        80.149092)       1    0.0%    0.0%  
+[       80.149092,        80.149098)       0    0.0%    0.0%  
+[       80.149098,        80.149137)       0    0.0%    0.0%  
+[       80.149137,        80.149405)       0    0.0%    0.0%  
+[       80.149405,        80.151229)       0    0.0%    0.0%  
+[       80.151229,        80.163627)       1    0.0%    0.0%  
+[       80.163627,        80.247931)      26    0.0%    0.0%  
+[       80.247931,        80.821173)   13015    3.5%    3.5%  
+[       80.821173,        84.719040)  307444   82.9%   86.4%  ########
+[       84.719040,       111.223315)   50545   13.6%  100.0%  #
+[      111.223315,       291.444088)       1    0.0%  100.0%  
+Number of requests:  371033	Request throughput:  1.9788426666666667e+06 bit/s
+Number of responses: 371033	Response throughput: 1.5830741333333334e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.7664ms	90_Latency: 82.0538ms	99_Latency: 83.7894ms	Avg_Latency: 81.8232ms	Bytes/op: 70197.66757493188	Allocs/op: 240.88964577656677	
+Histogram (unit: ms)
+Count: 734  Min:  80.7  Max:  87.5  Avg: 81.82
+------------------------------------------------------------
+[      80.742401,       80.742402)    1    0.1%    0.1%  
+[      80.742402,       80.742407)    0    0.0%    0.1%  
+[      80.742407,       80.742434)    0    0.0%    0.1%  
+[      80.742434,       80.742590)    0    0.0%    0.1%  
+[      80.742590,       80.743488)    0    0.0%    0.1%  
+[      80.743488,       80.748641)    0    0.0%    0.1%  
+[      80.748641,       80.778230)    0    0.0%    0.1%  
+[      80.778230,       80.948120)    5    0.7%    0.8%  
+[      80.948120,       81.923577)  574   78.2%   79.0%  ########
+[      81.923577,       87.524344)  153   20.8%   99.9%  ##
+[      87.524344,      119.682180)    1    0.1%  100.0%  
+Number of requests:  734	Request throughput:  3914.6666666666665 bit/s
+Number of responses: 734	Response throughput: 313173.3333333333 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 84.0616ms	90_Latency: 84.3388ms	99_Latency: 85.0056ms	Avg_Latency: 84.0711ms	Bytes/op: 24658.543417366946	Allocs/op: 222.2983193277311	
+Histogram (unit: ms)
+Count: 714  Min:  83.0  Max:  86.4  Avg: 84.07
+------------------------------------------------------------
+[      83.016644,       83.016645)    1    0.1%    0.1%  
+[      83.016645,       83.016649)    0    0.0%    0.1%  
+[      83.016649,       83.016672)    0    0.0%    0.1%  
+[      83.016672,       83.016794)    0    0.0%    0.1%  
+[      83.016794,       83.017438)    0    0.0%    0.1%  
+[      83.017438,       83.020857)    0    0.0%    0.1%  
+[      83.020857,       83.039007)    0    0.0%    0.1%  
+[      83.039007,       83.135345)    1    0.1%    0.3%  
+[      83.135345,       83.646696)   34    4.8%    5.0%  
+[      83.646696,       86.360892)  677   94.8%   99.9%  #########
+[      86.360892,      100.767550)    1    0.1%  100.0%  
+Number of requests:  714	Request throughput:  3808 bit/s
+Number of responses: 714	Response throughput: 304640 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.5439ms	90_Latency: 81.8050ms	99_Latency: 82.7363ms	Avg_Latency: 81.5679ms	Bytes/op: 47391.84782608696	Allocs/op: 251.56929347826087	
+Histogram (unit: ms)
+Count: 736  Min:  80.6  Max:  84.2  Avg: 81.57
+------------------------------------------------------------
+[      80.587367,       80.587368)    1    0.1%    0.1%  
+[      80.587368,       80.587372)    0    0.0%    0.1%  
+[      80.587372,       80.587396)    0    0.0%    0.1%  
+[      80.587396,       80.587520)    0    0.0%    0.1%  
+[      80.587520,       80.588187)    0    0.0%    0.1%  
+[      80.588187,       80.591758)    0    0.0%    0.1%  
+[      80.591758,       80.610868)    0    0.0%    0.1%  
+[      80.610868,       80.713145)    2    0.3%    0.4%  
+[      80.713145,       81.260531)   53    7.2%    7.6%  #
+[      81.260531,       84.190130)  679   92.3%   99.9%  #########
+[      84.190130,       99.869309)    1    0.1%  100.0%  
+Number of requests:  736	Request throughput:  3925.3333333333335 bit/s
+Number of responses: 736	Response throughput: 314026.6666666667 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_1-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.5487ms	90_Latency: 81.7659ms	99_Latency: 82.0166ms	Avg_Latency: 81.5462ms	Bytes/op: 47335.565217391304	Allocs/op: 252.18342391304347	
+Histogram (unit: ms)
+Count: 736  Min:  80.8  Max:  88.9  Avg: 81.55
+------------------------------------------------------------
+[      80.801531,       80.801532)    1    0.1%    0.1%  
+[      80.801532,       80.801537)    0    0.0%    0.1%  
+[      80.801537,       80.801565)    0    0.0%    0.1%  
+[      80.801565,       80.801732)    0    0.0%    0.1%  
+[      80.801732,       80.802709)    0    0.0%    0.1%  
+[      80.802709,       80.808433)    0    0.0%    0.1%  
+[      80.808433,       80.841966)    0    0.0%    0.1%  
+[      80.841966,       81.038421)   20    2.7%    2.9%  
+[      81.038421,       82.189369)  710   96.5%   99.3%  ##########
+[      82.189369,       88.932292)    4    0.5%   99.9%  
+[      88.932292,      128.436244)    1    0.1%  100.0%  
+Number of requests:  736	Request throughput:  3925.3333333333335 bit/s
+Number of responses: 736	Response throughput: 314026.6666666667 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 82.0823ms	90_Latency: 82.8775ms	99_Latency: 83.9443ms	Avg_Latency: 82.1136ms	Bytes/op: 55902.94035207657	Allocs/op: 205.94616304905145	
+Histogram (unit: ms)
+Count: 5851  Min:  80.5  Max:  86.6  Avg: 82.11
+------------------------------------------------------------
+[      80.478963,       80.478964)     1    0.0%    0.0%  
+[      80.478964,       80.478969)     0    0.0%    0.0%  
+[      80.478969,       80.478995)     0    0.0%    0.0%  
+[      80.478995,       80.479146)     0    0.0%    0.0%  
+[      80.479146,       80.480000)     0    0.0%    0.0%  
+[      80.480000,       80.484847)     0    0.0%    0.0%  
+[      80.484847,       80.512353)     0    0.0%    0.0%  
+[      80.512353,       80.668441)     7    0.1%    0.1%  
+[      80.668441,       81.554178)  1035   17.7%   17.8%  ##
+[      81.554178,       86.580403)  4807   82.2%  100.0%  ########
+[      86.580403,      115.102328)     1    0.0%  100.0%  
+Number of requests:  5851	Request throughput:  31205.333333333332 bit/s
+Number of responses: 5851	Response throughput: 2.4964266666666665e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 84.1193ms	90_Latency: 84.7459ms	99_Latency: 85.6205ms	Avg_Latency: 84.1590ms	Bytes/op: 24185.258584442887	Allocs/op: 192.39628591450597	
+Histogram (unit: ms)
+Count: 5708  Min:  82.6  Max: 100.6  Avg: 84.16
+------------------------------------------------------------
+[       82.618556,        82.618557)     1    0.0%    0.0%  
+[       82.618557,        82.618562)     0    0.0%    0.0%  
+[       82.618562,        82.618597)     0    0.0%    0.0%  
+[       82.618597,        82.618818)     0    0.0%    0.0%  
+[       82.618818,        82.620232)     0    0.0%    0.0%  
+[       82.620232,        82.629282)     0    0.0%    0.0%  
+[       82.629282,        82.687189)     0    0.0%    0.0%  
+[       82.687189,        83.057715)    82    1.4%    1.5%  
+[       83.057715,        85.428585)  5555   97.3%   98.8%  ##########
+[       85.428585,       100.598970)    69    1.2%  100.0%  
+[      100.598970,       197.669064)     1    0.0%  100.0%  
+Number of requests:  5708	Request throughput:  30442.666666666668 bit/s
+Number of responses: 5708	Response throughput: 2.4354133333333335e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.9397ms	90_Latency: 82.8146ms	99_Latency: 83.8225ms	Avg_Latency: 81.9958ms	Bytes/op: 47068.31262798635	Allocs/op: 220.84505119453925	
+Histogram (unit: ms)
+Count: 5860  Min:  80.4  Max:  86.5  Avg: 82.00
+------------------------------------------------------------
+[      80.373609,       80.373610)     1    0.0%    0.0%  
+[      80.373610,       80.373615)     0    0.0%    0.0%  
+[      80.373615,       80.373641)     0    0.0%    0.0%  
+[      80.373641,       80.373792)     0    0.0%    0.0%  
+[      80.373792,       80.374647)     0    0.0%    0.0%  
+[      80.374647,       80.379499)     0    0.0%    0.0%  
+[      80.379499,       80.407041)     1    0.0%    0.0%  
+[      80.407041,       80.563363)     4    0.1%    0.1%  
+[      80.563363,       81.450612)  1133   19.3%   19.4%  ##
+[      81.450612,       86.486466)  4720   80.5%  100.0%  ########
+[      86.486466,      115.068967)     1    0.0%  100.0%  
+Number of requests:  5860	Request throughput:  31253.333333333332 bit/s
+Number of responses: 5860	Response throughput: 2.5002666666666665e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_8-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 81.9007ms	90_Latency: 82.5634ms	99_Latency: 83.2591ms	Avg_Latency: 81.8893ms	Bytes/op: 46745.07075873828	Allocs/op: 218.52549019607844	
+Histogram (unit: ms)
+Count: 5865  Min:  80.4  Max:  84.4  Avg: 81.89
+------------------------------------------------------------
+[      80.436718,       80.436719)     1    0.0%    0.0%  
+[      80.436719,       80.436723)     0    0.0%    0.0%  
+[      80.436723,       80.436747)     0    0.0%    0.0%  
+[      80.436747,       80.436877)     0    0.0%    0.0%  
+[      80.436877,       80.437577)     0    0.0%    0.0%  
+[      80.437577,       80.441367)     0    0.0%    0.0%  
+[      80.441367,       80.461886)     0    0.0%    0.0%  
+[      80.461886,       80.572962)     1    0.0%    0.0%  
+[      80.572962,       81.174270)   522    8.9%    8.9%  #
+[      81.174270,       84.429421)  5340   91.0%  100.0%  #########
+[      84.429421,      102.051015)     1    0.0%  100.0%  
+Number of requests:  5865	Request throughput:  31280 bit/s
+Number of responses: 5865	Response throughput: 2.5024e+06 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 82.4497ms	90_Latency: 83.8026ms	99_Latency: 86.5777ms	Avg_Latency: 82.6405ms	Bytes/op: 54619.07397213143	Allocs/op: 199.12186048511956	
+Histogram (unit: ms)
+Count: 46504  Min:  80.5  Max:  93.2  Avg: 82.64
+------------------------------------------------------------
+[      80.485278,       80.485279)      1    0.0%    0.0%  
+[      80.485279,       80.485284)      0    0.0%    0.0%  
+[      80.485284,       80.485316)      0    0.0%    0.0%  
+[      80.485316,       80.485511)      0    0.0%    0.0%  
+[      80.485511,       80.486713)      0    0.0%    0.0%  
+[      80.486713,       80.494107)      0    0.0%    0.0%  
+[      80.494107,       80.539617)      1    0.0%    0.0%  
+[      80.539617,       80.819702)     53    0.1%    0.1%  
+[      80.819702,       82.543458)  25392   54.6%   54.7%  #####
+[      82.543458,       93.152130)  21056   45.3%  100.0%  #####
+[      93.152130,      158.442097)      1    0.0%  100.0%  
+Number of requests:  46504	Request throughput:  248021.33333333334 bit/s
+Number of responses: 46504	Response throughput: 1.9841706666666668e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 158.3562ms	90_Latency: 159.1577ms	99_Latency: 164.4587ms	Avg_Latency: 158.7952ms	Bytes/op: 24397.403369672942	Allocs/op: 180.15518665345226	
+Histogram (unit: ms)
+Count: 24216  Min: 111.7  Max: 377.8  Avg: 158.80
+------------------------------------------------------------
+[      111.738242,       111.738243)      1    0.0%    0.0%  
+[      111.738243,       111.738251)      0    0.0%    0.0%  
+[      111.738251,       111.738317)      0    0.0%    0.0%  
+[      111.738317,       111.738885)      0    0.0%    0.0%  
+[      111.738885,       111.743794)      0    0.0%    0.0%  
+[      111.743794,       111.786163)      0    0.0%    0.0%  
+[      111.786163,       112.151890)      9    0.0%    0.0%  
+[      112.151890,       115.308802)      0    0.0%    0.0%  
+[      115.308802,       142.558876)    122    0.5%    0.5%  
+[      142.558876,       377.778131)  24083   99.5%  100.0%  ##########
+[      377.778131,      2408.161588)      1    0.0%  100.0%  
+Number of requests:  24216	Request throughput:  129152 bit/s
+Number of responses: 24216	Response throughput: 1.033216e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 82.1274ms	90_Latency: 83.5410ms	99_Latency: 86.7175ms	Avg_Latency: 82.3361ms	Bytes/op: 46969.023975317636	Allocs/op: 215.82634499603625	
+Histogram (unit: ms)
+Count: 46673  Min:  80.3  Max: 101.8  Avg: 82.34
+------------------------------------------------------------
+[       80.263996,        80.263997)      1    0.0%    0.0%  
+[       80.263997,        80.264003)      0    0.0%    0.0%  
+[       80.264003,        80.264039)      0    0.0%    0.0%  
+[       80.264039,        80.264274)      0    0.0%    0.0%  
+[       80.264274,        80.265811)      0    0.0%    0.0%  
+[       80.265811,        80.275844)      0    0.0%    0.0%  
+[       80.275844,        80.341330)      1    0.0%    0.0%  
+[       80.341330,        80.768772)    437    0.9%    0.9%  
+[       80.768772,        83.558783)  41667   89.3%   90.2%  #########
+[       83.558783,       101.769807)   4566    9.8%  100.0%  #
+[      101.769807,       220.637212)      1    0.0%  100.0%  
+Number of requests:  46673	Request throughput:  248922.66666666666 bit/s
+Number of responses: 46673	Response throughput: 1.9913813333333332e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_64-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 82.1421ms	90_Latency: 83.0852ms	99_Latency: 84.7495ms	Avg_Latency: 82.2198ms	Bytes/op: 46671.68493150685	Allocs/op: 213.70083476027398	
+Histogram (unit: ms)
+Count: 46720  Min:  80.4  Max:  90.9  Avg: 82.22
+------------------------------------------------------------
+[      80.363802,       80.363803)      1    0.0%    0.0%  
+[      80.363803,       80.363808)      0    0.0%    0.0%  
+[      80.363808,       80.363838)      0    0.0%    0.0%  
+[      80.363838,       80.364021)      0    0.0%    0.0%  
+[      80.364021,       80.365123)      0    0.0%    0.0%  
+[      80.365123,       80.371769)      0    0.0%    0.0%  
+[      80.371769,       80.411838)      2    0.0%    0.0%  
+[      80.411838,       80.653424)     68    0.1%    0.2%  
+[      80.653424,       82.110002)  22325   47.8%   47.9%  #####
+[      82.110002,       90.892041)  24323   52.1%  100.0%  #####
+[      90.892041,      143.840961)      1    0.0%  100.0%  
+Number of requests:  46720	Request throughput:  249173.33333333334 bit/s
+Number of responses: 46720	Response throughput: 1.9933866666666668e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_gzip-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 84.8153ms	90_Latency: 93.9505ms	99_Latency: 107.9809ms	Avg_Latency: 86.7188ms	Bytes/op: 48587.66401805869	Allocs/op: 197.21456264108352	
+Histogram (unit: ms)
+Count: 354400  Min:  80.2  Max: 143.8  Avg: 86.72
+------------------------------------------------------------
+[       80.240102,        80.240103)       1    0.0%    0.0%  
+[       80.240103,        80.240109)       0    0.0%    0.0%  
+[       80.240109,        80.240156)       0    0.0%    0.0%  
+[       80.240156,        80.240501)       0    0.0%    0.0%  
+[       80.240501,        80.243040)       0    0.0%    0.0%  
+[       80.243040,        80.261736)       0    0.0%    0.0%  
+[       80.261736,        80.399379)       4    0.0%    0.0%  
+[       80.399379,        81.412781)    8766    2.5%    2.5%  
+[       81.412781,        88.873953)  262199   74.0%   76.5%  #######
+[       88.873953,       143.806865)   83429   23.5%  100.0%  ##
+[      143.806865,       548.250673)       1    0.0%  100.0%  
+Number of requests:  354400	Request throughput:  1.8901333333333333e+06 bit/s
+Number of responses: 354400	Response throughput: 1.5121066666666666e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_off-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 1249.8354ms	90_Latency: 1251.0482ms	99_Latency: 2099.8574ms	Avg_Latency: 1258.6540ms	Bytes/op: 23961.750709593707	Allocs/op: 178.2690373854513	
+Histogram (unit: ms)
+Count: 24662  Min: 115.7  Max: 2925.0  Avg: 1258.65
+------------------------------------------------------------
+[       115.733283,        115.733284)      1    0.0%    0.0%  
+[       115.733284,        115.733294)      0    0.0%    0.0%  
+[       115.733294,        115.733409)      0    0.0%    0.0%  
+[       115.733409,        115.734694)      0    0.0%    0.0%  
+[       115.734694,        115.749109)      0    0.0%    0.0%  
+[       115.749109,        115.910792)      0    0.0%    0.0%  
+[       115.910792,        117.724259)      0    0.0%    0.0%  
+[       117.724259,        138.064389)      0    0.0%    0.0%  
+[       138.064389,        366.202616)     72    0.3%    0.3%  
+[       366.202616,       2925.038199)  24588   99.7%  100.0%  ##########
+[      2925.038199,      31625.355704)      1    0.0%  100.0%  
+Number of requests:  24662	Request throughput:  131530.66666666666 bit/s
+Number of responses: 24662	Response throughput: 1.0522453333333334e+07 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_datadog-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 84.0400ms	90_Latency: 89.4193ms	99_Latency: 97.5759ms	Avg_Latency: 85.0078ms	Bytes/op: 46650.67459470223	Allocs/op: 211.29819738596075	
+Histogram (unit: ms)
+Count: 361586  Min:  80.2  Max: 135.6  Avg: 85.01
+------------------------------------------------------------
+[       80.191995,        80.191996)       1    0.0%    0.0%  
+[       80.191996,        80.192002)       0    0.0%    0.0%  
+[       80.192002,        80.192048)       0    0.0%    0.0%  
+[       80.192048,        80.192376)       0    0.0%    0.0%  
+[       80.192376,        80.194759)       0    0.0%    0.0%  
+[       80.194759,        80.212037)       0    0.0%    0.0%  
+[       80.212037,        80.337319)      23    0.0%    0.0%  
+[       80.337319,        81.245719)   15751    4.4%    4.4%  
+[       81.245719,        87.832397)  286338   79.2%   83.6%  ########
+[       87.832397,       135.591479)   59472   16.4%  100.0%  ##
+[      135.591479,       481.885902)       1    0.0%  100.0%  
+Number of requests:  361586	Request throughput:  1.9284586666666667e+06 bit/s
+Number of responses: 361586	Response throughput: 1.5427669333333334e+08 bit/s
+
+go1.22.1/grpc1.64.0-dev
+unary-networkMode_none-bufConn_false-keepalive_false-benchTime_1m0s-trace_false-latency_40ms-kbps_10240-MTU_0-maxConcurrentCalls_512-reqSize_40B-respSize_3200B-compressor_klauspost-channelz_false-preloader_false-clientReadBufferSize_-1-clientWriteBufferSize_-1-serverReadBufferSize_-1-serverWriteBufferSize_-1-sleepBetweenRPCs_0s-connections_1-recvBufferPool_nil-sharedWriteBuffer_false:
+50_Latency: 82.9767ms	90_Latency: 86.7569ms	99_Latency: 94.1030ms	Avg_Latency: 83.7526ms	Bytes/op: 46660.97361042613	Allocs/op: 212.6038403165114	
+Histogram (unit: ms)
+Count: 367001  Min:  80.3  Max: 126.1  Avg: 83.75
+------------------------------------------------------------
+[       80.279827,        80.279828)       1    0.0%    0.0%  
+[       80.279828,        80.279834)       0    0.0%    0.0%  
+[       80.279834,        80.279877)       0    0.0%    0.0%  
+[       80.279877,        80.280185)       0    0.0%    0.0%  
+[       80.280185,        80.282368)       0    0.0%    0.0%  
+[       80.282368,        80.297866)       0    0.0%    0.0%  
+[       80.297866,        80.407901)      10    0.0%    0.0%  
+[       80.407901,        81.189119)   12347    3.4%    3.4%  
+[       81.189119,        86.735574)  317650   86.6%   89.9%  #########
+[       86.735574,       126.114045)   36992   10.1%  100.0%  #
+[      126.114045,       405.691509)       1    0.0%  100.0%  
+Number of requests:  367001	Request throughput:  1.9573386666666667e+06 bit/s
+Number of responses: 367001	Response throughput: 1.5658709333333334e+08 bit/s
+
+powder@powder-System-Product-Name:~/go-src/grpc-go$ 
+
